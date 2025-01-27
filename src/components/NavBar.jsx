@@ -1,37 +1,54 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {AuthContext} from '../context/AuthContext';
 import logo from '../assets/banana-01.png';
-import { useNavigate, Link } from 'react-router-dom';
+import {useNavigate, Link} from 'react-router-dom';
 
 function NavBar() {
-  const navigate = useNavigate();
 
-  return (
-    <nav>
-        <Link to="/">
+    const {isAuth} = useContext(AuthContext)
+    console.log(isAuth);
+
+    const navigate = useNavigate();
+
+    return (
+        <nav>
+            <Link to="/">
           <span className="logo-container">
             <img src={logo} alt="logo"/>
             <h3>
               Banana Security
             </h3>
           </span>
-        </Link>
+            </Link>
 
-      <div>
-        <button
-          type="button"
-          onClick={() => navigate('/signin')}
-        >
-          Log in
-        </button>
-        <button
-          type="button"
-          onClick={() => navigate('/signup')}
-        >
-          Registreren
-        </button>
-      </div>
-    </nav>
-  );
+            <div>
+                {isAuth === true ? (
+                    <button
+                        type="button"
+                    >
+                        Uitloggen
+                    </button>
+                ) : (
+                    <>
+                        <button
+                            type="button"
+                            onClick={() => navigate('/signin')}
+                        >
+                            Log in
+                        </button>
+
+                        <button
+                            type="button"
+                            onClick={() => navigate('/signup')}
+                        >
+                            Registreren
+                        </button>
+                    </>
+                )
+                }
+            </div>
+        </nav>
+    );
 }
 
 export default NavBar;
