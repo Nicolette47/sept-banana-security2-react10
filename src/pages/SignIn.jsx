@@ -11,7 +11,7 @@ function handleSubmit(e) {
     login();
 }
 
-
+// Voor het inlog-formulier zijn dat emailadres en wachtwoord.
 
   return (
     <>

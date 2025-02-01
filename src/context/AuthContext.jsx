@@ -7,7 +7,10 @@ export const AuthContext = createContext({});
 
 
 function AuthContextProvider({children}) {
-    const [isAuth, setIsAuth] = useState(false);
+    const [isAuth, setIsAuth] = useState({
+        isAuth: false,
+        user: null,
+    });
     const navigate = useNavigate();
 
 
@@ -24,8 +27,9 @@ function AuthContextProvider({children}) {
     }
 
     const data = {
-        isAuth: isAuth,
+        isAuth: isAuth.isAuth,
         setIsAuth: setIsAuth,
+        user: isAuth.user,
         login: login,
         logout: logout,
     }
