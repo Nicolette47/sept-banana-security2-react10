@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import InputField from "../components/InputField";
+import axios from 'axios';
 
 import {unstable_renderSubtreeIntoContainer} from "react-dom";
 
@@ -22,9 +23,21 @@ function SignUp() {
         })
     }
 
-    function handleSubmit(e) {
+
+    async function handleSubmit(e) {
         e.preventDefault()
         console.log(formState);
+
+        try {
+            const response = await axios.post('http://localhost:3000/register', {
+                email: formState.emailadres,
+                password: formState.wachtwoord,
+                username: formState.gebruikersnaam,
+            })
+            console.log(response.data);
+        } catch (e) {
+            console.error(e.response.data);
+        }
     }
 
 
