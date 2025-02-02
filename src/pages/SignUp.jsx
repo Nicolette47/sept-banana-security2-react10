@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
+import InputField from "../components/InputField";
+
 import {unstable_renderSubtreeIntoContainer} from "react-dom";
+
 
 function SignUp() {
 
@@ -35,17 +38,15 @@ function SignUp() {
                 doloremque ea eveniet facere fuga illum in numquam quia reiciendis rem sequi tenetur veniam?</p>
 
             <form onSubmit={handleSubmit}>
-                <label htmlFor="username-field">gebruikersnaam:</label>
-                <input
+
+                <InputField
                     type="text"
                     id="username-field"
                     name="gebruikersnaam"
                     value={formState.gebruikersnaam}
                     onChange={handleChange}
                 />
-
-                <label htmlFor="emailadress-field">emailadres:</label>
-                <input
+                <InputField
                     type="email"
                     id="emailadress-field"
                     name="emailadres"
@@ -53,8 +54,7 @@ function SignUp() {
                     onChange={handleChange}
                 />
 
-                <label htmlFor="password-field">wachtwoord</label>
-                <input
+                <InputField
                     type="password"
                     id="password-field"
                     name="wachtwoord"
