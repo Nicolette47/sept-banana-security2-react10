@@ -1,17 +1,40 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {AuthContext} from '../context/AuthContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import InputField from "../components/InputField";
+import axios from "axios";
 
 function SignIn() {
     const {isAuth, login} = useContext(AuthContext)
     console.log(isAuth);
 
-function handleSubmit(e) {
-    e.preventDefault()
-    login();
-}
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, toggleError] = useState(false);
 
-// Voor het inlog-formulier zijn dat emailadres en wachtwoord.
+
+
+    async function handleSubmit(e) {
+        e.preventDefault()
+        console.log(email);
+        console.log(password)
+        toggleError(false);
+
+
+
+        try {
+            const result = await axios.post('http://localhost:3000/login', {
+                email: email,
+                password: password,
+            })
+            console.log(result.data.accessToken);
+            login(result.data.accessToken);
+        } catch (e) {
+            console.error(e);
+            toggleError(true);
+        }
+    }
+
 
   return (
     <>
@@ -19,7 +42,22 @@ function handleSubmit(e) {
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias cum debitis dolor dolore fuga id molestias qui quo unde?</p>
 
       <form onSubmit= {handleSubmit}>
-        <p>*invoervelden*</p>
+
+          <InputField
+              type="email"
+              id="emailadress-field"
+              name="emailadres"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+          />
+
+          <InputField
+              type="password"
+              id="password-field"
+              name="wachtwoord"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+          />
 
         <button
         type="submit"

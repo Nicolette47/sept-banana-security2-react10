@@ -14,7 +14,8 @@ function AuthContextProvider({children}) {
     const navigate = useNavigate();
 
 
-    function login() {
+    function login(token) {
+        localStorage.setItem('token', token);
         console.log("De gebruiker is ingelogd");
         setIsAuth(true);
         navigate('/profile');

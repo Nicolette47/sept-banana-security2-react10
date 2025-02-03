@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
+import React, {useState,} from 'react';
+import {Link, useNavigate} from 'react-router-dom';
 import InputField from "../components/InputField";
 import axios from 'axios';
+import SignIn from '../pages/SignIn';
 
 import {unstable_renderSubtreeIntoContainer} from "react-dom";
 
@@ -13,6 +14,11 @@ function SignUp() {
         emailadres: '',
         wachtwoord: '',
     })
+
+    const [error, toggleError] = useState(false);
+
+    const navigate = useNavigate();
+
 
     function handleChange(e) {
         const changeFieldName = e.target.name;
@@ -27,6 +33,7 @@ function SignUp() {
     async function handleSubmit(e) {
         e.preventDefault()
         console.log(formState);
+        toggleError(false);
 
         try {
             const response = await axios.post('http://localhost:3000/register', {
@@ -36,8 +43,11 @@ function SignUp() {
             })
             console.log(response.data);
         } catch (e) {
+            toggleError(true);
             console.error(e.response.data);
         }
+
+        navigate('/SignIn')
     }
 
 
@@ -49,6 +59,8 @@ function SignUp() {
                 harum, numquam, placeat quisquam repellat rerum suscipit ullam vitae. A ab ad assumenda, consequuntur
                 deserunt
                 doloremque ea eveniet facere fuga illum in numquam quia reiciendis rem sequi tenetur veniam?</p>
+
+            {error && <p>Er is iets misgegaan. Probeer opnieuw</p> }
 
             <form onSubmit={handleSubmit}>
 
@@ -74,6 +86,7 @@ function SignUp() {
                     value={formState.wachtwoord}
                     onChange={handleChange}
                 />
+                {error && <p className="error">Dit account bestaat al. Probeer een ander emailadres.</p>}
 
                 <button>verzenden</button>
             </form>
